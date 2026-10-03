@@ -1,0 +1,26 @@
+name: Verificar aplicación
+
+on:
+  push:
+    branches: ["main", "chatgpt-mejora-planeaciones"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: package.json
+      - name: Instalar dependencias
+        run: npm install
+      - name: Comprobar servidor
+        run: node --check server.mjs
+      - name: Compilar aplicación
+        run: npm run build
