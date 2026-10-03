@@ -20,5 +20,7 @@ jobs:
           cache-dependency-path: package.json
       - name: Instalar dependencias
         run: npm install
+      - name: Comprobar servidor
+        run: node --check server.mjs
       - name: Compilar aplicación
         run: npm run build
