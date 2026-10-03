@@ -82,7 +82,7 @@ export default function App() {
       setPlan(data.plan);
       setMaterialText(data.plan.materialesSugeridos?.[0] || "");
       setMaterialImage("");
-      flash("Planeación creada correctamente.");
+      flash(`Planeación creada correctamente con ${data.provider || "IA"}.`);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -102,7 +102,7 @@ export default function App() {
       });
       setPlan(data.plan);
       setRefineText("");
-      flash("La planeación fue mejorada.");
+      flash(`La planeación fue mejorada con ${data.provider || "IA"}.`);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -167,7 +167,7 @@ export default function App() {
         })
       });
       setMaterialImage(data.image);
-      flash("Material generado.");
+      flash(`Material generado con ${data.provider || "IA"}.`);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -185,7 +185,7 @@ export default function App() {
 
   const status = useMemo(() => {
     if (!aiInfo) return "Comprobando IA…";
-    return aiInfo.aiConfigured ? "IA configurada" : "Falta configurar la clave API";
+    return aiInfo.aiConfigured ? `IA configurada · ${aiInfo.provider || "proveedor listo"}` : "Falta configurar OpenAI o Gemini";
   }, [aiInfo]);
 
   return (
@@ -198,7 +198,7 @@ export default function App() {
         </div>
         <div className="hero-side">
           <span className={"status " + (aiInfo?.aiConfigured ? "ok" : "")}>{status}</span>
-          {aiInfo?.aiConfigured && <small>{aiInfo.textModel}</small>}
+          {aiInfo?.aiConfigured && <small>{aiInfo.provider}</small>}
         </div>
       </header>
 
